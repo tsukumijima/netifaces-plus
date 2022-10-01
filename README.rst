@@ -1,24 +1,5 @@
-netifaces 0.10.8
+netifaces 0.11.0
 ================
-
-+-------------+------------------+
-| Linux/macOS | |BuildStatus|    |
-+-------------+------------------+
-| Windows     | |WinBuildStatus| |
-+-------------+------------------+
-
-.. |BuildStatus| image:: https://travis-ci.org/al45tair/netifaces.svg?branch=master
-   :target: https://travis-ci.org/al45tair/netifaces
-   :alt: Build Status (Linux/Mac)
-
-.. |WinBuildStatus| image:: https://ci.appveyor.com/api/projects/status/3ctn1bl0aigpfjoo/branch/master?svg=true
-   :target: https://ci.appveyor.com/project/al45tair/netifaces/branch/master
-   :alt: Build Status (Windows)
-
-.. warning::
-
-   netifaces needs a new maintainer.  al45tair is no longer able to maintain it
-   or make new releases due to work commitments.
 
 1. What is this?
 ----------------
@@ -39,8 +20,8 @@ This package attempts to solve that problem.
 
 First you need to install it, which you can do by typing::
 
-  tar xvzf netifaces-0.10.8.tar.gz
-  cd netifaces-0.10.8
+  tar xvzf netifaces-0.11.0.tar.gz
+  cd netifaces-0.11.0
   python setup.py install
 
 **Note that you will need the relevant developer tools for your platform**,

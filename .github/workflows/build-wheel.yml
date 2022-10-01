@@ -9,15 +9,15 @@ jobs:
   build_wheels:
     strategy:
       matrix:
-        os: [ubuntu-22.04, windows-2022, macos-11]
+        os: [windows-2022, macos-11, ubuntu-22.04]
     runs-on: ${{ matrix.os }}
-    name: Build wheels on ${{ matrix.os }}
+    name: Build Wheels on ${{ matrix.os }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Set up QEMU
+      - name: Setup QEMU
         if: runner.os == 'Linux'
         uses: docker/setup-qemu-action@v1
         with:
