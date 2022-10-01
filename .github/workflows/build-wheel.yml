@@ -36,6 +36,18 @@ jobs:
           name: Wheels
           path: wheelhouse
 
+  publish_wheels:
+    runs-on: ubuntu-22.04
+    needs: build_wheels
+    name: Publish Wheels
+    steps:
+
+      - name: Download Wheels from artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: Wheels
+          path: wheelhouse
+
       - name: Publish Wheels to Test PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
