@@ -86,7 +86,7 @@ class my_build_ext(build_ext):
                             result = True
                         if status != 0:
                             result = False
-                        
+
             finally:
                 os.dup2(mystdout, 1)
                 os.dup2(mystderr, 2)
@@ -112,7 +112,7 @@ class my_build_ext(build_ext):
             results = {}
 
         self.conftestidx = 0
-        
+
         print("checking for getifaddrs...", end='')
 
         result = results.get('have_getifaddrs', None)
@@ -176,7 +176,7 @@ class my_build_ext(build_ext):
               sin.sin_family = AF_INET;
               sin.sin_port = 0;
               sin.sin_addr.s_addr = htonl (INADDR_LOOPBACK);
-              
+
               ret = getnameinfo ((struct sockaddr *)&sin, sizeof (sin),
                                  buffer, sizeof (buffer),
                                  NULL, 0,
@@ -398,7 +398,7 @@ class my_build_ext(build_ext):
             # lengths, because they're in the sa_len field on just about
             # everything but Linux.
             print("checking which sockaddr_xxx structs are defined...", end='')
-            
+
             result = results.get('have_sockaddrs', None)
             if result is not None:
                 cached = '(cached)'
@@ -423,7 +423,7 @@ class my_build_ext(build_ext):
                     #include <net/if.h>
                     #include <netinet/in.h>
                     %(includes)s
-                    
+
                     int main (void) {
                       struct sockaddr_%(sockaddr)s sa;
                       return 0;
@@ -435,7 +435,7 @@ class my_build_ext(build_ext):
 
                     if self.test_build(testrig):
                         result.append(sockaddr)
-                
+
             if result:
                 print('%s. %s' % (' '.join(result), cached))
                 for sockaddr in result:
