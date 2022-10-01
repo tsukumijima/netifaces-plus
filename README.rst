@@ -1,5 +1,24 @@
-netifaces 0.11.0
-================
+netifaces-plus 0.12.0
+=====================
+
+| This library is a fork of `al45tair/netifaces <https://github.com/al45tair/netifaces>`_.
+| Since the `al45tair/netifaces <https://github.com/al45tair/netifaces>`_ repository is archived, Merged unmerged pull requests and useful changes.
+
+Changes since netifaces 0.11.0 are as follows:
+
+* Add support for Python 3.9 and higher.
+* Drop support for Python 3.5 and below.
+* Remove legacy build scripts.
+* Migrate Wheels builds to GitHub Actions.
+* Modernize packaging (`al45tair/netifaces#77 <https://github.com/al45tair/netifaces/pull/77>`_).
+* Reorganized package layout (`al45tair/netifaces#77 <https://github.com/al45tair/netifaces/pull/77>`_).
+* Add support for type hints (`al45tair/netifaces#77 <https://github.com/al45tair/netifaces/pull/77>`_).
+* Add new function for loading info from all interfaces (`al45tair/netifaces#76 <https://github.com/al45tair/netifaces/pull/76>`_).
+
+I haven't tested it much, but it should probably work.
+
+| Personally, I recommend using https://pypi.org/project/ifaddr/ instead of this library.
+| It is more modern code and built only in Python.
 
 1. What is this?
 ----------------
@@ -20,9 +39,7 @@ This package attempts to solve that problem.
 
 First you need to install it, which you can do by typing::
 
-  tar xvzf netifaces-0.11.0.tar.gz
-  cd netifaces-0.11.0
-  python setup.py install
+  pip install netifaces-plus
 
 **Note that you will need the relevant developer tools for your platform**,
 as netifaces is written in C and installing this way will compile the extension.

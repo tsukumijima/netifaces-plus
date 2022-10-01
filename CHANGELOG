@@ -1,3 +1,15 @@
+2022-10-01	Version 0.12.0 (fork as netiface-plus)
+
+	* Added support for Python 3.9 and higher.
+	* Dropped support for Python 3.5 and below.
+	* Remove legacy build scripts.
+	* Migrate Wheels builds to GitHub Actions.
+	* Modernize packaging (thanks James Morris).
+	* Reorganized package layout (thanks James Morris).
+	* Added support for type hints (thanks James Morris).
+	* Added new function for loading info from all interfaces
+	  (thanks LukasMazl).
+
 2021-05-31	Version 0.11.0
 
 	* Added notice about needing a new maintainer.
