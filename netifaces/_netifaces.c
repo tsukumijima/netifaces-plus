@@ -135,7 +135,7 @@ PyObject *PyUnicode_FromString(const char *s)
 #  endif
 
 /* Map address families to sizes of sockaddr structs */
-static int af_to_len(int af) 
+static int af_to_len(int af)
 {
   switch (af) {
   case AF_INET: return sizeof (struct sockaddr_in);
@@ -382,7 +382,7 @@ string_from_sockaddr (struct sockaddr *addr,
     size_t n, len;
     char *ptr;
     const char *data;
-      
+
     len = SA_LEN(addr);
 
 #if HAVE_AF_LINK
@@ -1272,7 +1272,7 @@ ifaddrs (PyObject *self, PyObject *args)
   freeifaddrs (addrs);
 #elif HAVE_SOCKET_IOCTLS
   /* .. UNIX, with SIOC ioctls() ............................................ */
-  
+
   int sock = socket(AF_INET, SOCK_DGRAM, 0);
 
   if (sock < 0) {
@@ -1385,7 +1385,7 @@ allifaddrs (PyObject *self)
         PyDict_SetItem(result, ifname, dict);
     }
 
-    Py_XDECREF(ifname);    
+    Py_XDECREF(ifname);
 
     if(!add_to_family (dict, addr->ifa_addr->sa_family, ifinfo)) {
       Py_DECREF (dict);
@@ -1562,7 +1562,7 @@ interfaces (PyObject *self)
 
     PyDict_SetItemString(dictionary, addr->ifa_name, Py_None);
   }
-  
+
   result = PyMapping_Keys(dictionary);
 
   freeifaddrs (addrs);
@@ -2377,10 +2377,10 @@ gateways (PyObject *self)
   }
 
   msglen = (sizeof (struct rt_msghdr)
-            + 2 * sizeof (struct sockaddr_in) 
+            + 2 * sizeof (struct sockaddr_in)
             + sizeof (struct sockaddr_dl));
   memset (pmsg, 0, msglen);
-  
+
   /* AF_INET first */
   pmsg->rtm_msglen = msglen;
   pmsg->rtm_type = RTM_GET;
@@ -2744,7 +2744,7 @@ gateways (PyObject *self)
 
 /* -- Python Module --------------------------------------------------------- */
 
-// On Python >= 3.4, the function signature shown by help() can be customized if the 
+// On Python >= 3.4, the function signature shown by help() can be customized if the
 // function signature is followed by --\n\n
 // https://stackoverflow.com/a/41245451
 #if PY_MAJOR_VERSION == 3 && PY_MINOR_VERSION >= 4
@@ -2802,7 +2802,7 @@ MODULE_INIT(_netifaces)
 
 #ifdef WIN32
   WSADATA wsad;
-  
+
   WSAStartup(MAKEWORD (2, 2), &wsad);
 #endif
 
@@ -2812,7 +2812,7 @@ MODULE_INIT(_netifaces)
 
   /* Address families (auto-detect using #ifdef) */
   address_family_dict = PyDict_New();
-#ifdef AF_UNSPEC  
+#ifdef AF_UNSPEC
   PyModule_AddIntConstant (m, "AF_UNSPEC", AF_UNSPEC);
   PyDict_SetItem(address_family_dict, PyInt_FromLong(AF_UNSPEC),
           PyUnicode_FromString("AF_UNSPEC"));
@@ -2837,12 +2837,12 @@ MODULE_INIT(_netifaces)
   PyDict_SetItem(address_family_dict, PyInt_FromLong(AF_AX25),
           PyUnicode_FromString("AF_AX25"));
 #endif
-#ifdef AF_IMPLINK  
+#ifdef AF_IMPLINK
   PyModule_AddIntConstant (m, "AF_IMPLINK", AF_IMPLINK);
   PyDict_SetItem(address_family_dict, PyInt_FromLong(AF_IMPLINK),
           PyUnicode_FromString("AF_IMPLINK"));
 #endif
-#ifdef AF_PUP  
+#ifdef AF_PUP
   PyModule_AddIntConstant (m, "AF_PUP", AF_PUP);
   PyDict_SetItem(address_family_dict, PyInt_FromLong(AF_PUP),
           PyUnicode_FromString("AF_PUP"));
