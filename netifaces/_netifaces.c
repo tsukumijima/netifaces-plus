@@ -1303,22 +1303,22 @@ ifaddrs (PyObject *self, PyObject *args)
 static PyObject *
 allifaddrs (PyObject *self)
 {
-    PyObject *result;
+  PyObject *result;
 #if defined(WIN32)
-    PIP_ADAPTER_ADDRESSES pAdapterAddresses = NULL, pInfo = NULL;
-    ULONG ulBufferLength = 0;
-    DWORD dwRet;
+  PIP_ADAPTER_ADDRESSES pAdapterAddresses = NULL, pInfo = NULL;
+  ULONG ulBufferLength = 0;
+  DWORD dwRet;
 #elif HAVE_GETIFADDRS
-    struct ifaddrs *addrs = NULL;
-    struct ifaddrs *addr = NULL;
+  struct ifaddrs *addrs = NULL;
+  struct ifaddrs *addr = NULL;
 #endif
 
-    result = PyDict_New ();
+  result = PyDict_New ();
 
-    if (!result)
-        return NULL;
+  if (!result)
+    return NULL;
 #if defined(WIN32)
-    /* .. Win32 ............................................................... */
+  /* .. Win32 ............................................................... */
 
   /* First, retrieve the adapter information.  We do this in a loop, in
      case someone adds or removes adapters in the meantime. */
@@ -1345,25 +1345,24 @@ allifaddrs (PyObject *self)
     if (pAdapterAddresses)
       free (pAdapterAddresses);
 
-    PyErr_SetString (PyExc_OSError,
-                     "Unable to obtain adapter information.");
+    PyErr_SetString (PyExc_OSError, "Unable to obtain adapter information.");
     return NULL;
   }
 
   for (pInfo = pAdapterAddresses; pInfo; pInfo = pInfo->Next) {
-        PyObject* dict = winifaddrinfo(pInfo);
+    PyObject* dict = winifaddrinfo(pInfo);
 
-        if(!dict)
-            continue;
+    if (!dict)
+      continue;
 
-        PyObject *ifname = PyUnicode_FromString (pInfo->AdapterName);
-        PyDict_SetItem(result, ifname, dict);
-	Py_XDECREF(ifname);
+    PyObject *ifname = PyUnicode_FromString (pInfo->AdapterName);
+    PyDict_SetItem(result, ifname, dict);
+	  Py_XDECREF(ifname);
   }
 
   free ((void *)pAdapterAddresses);
 #elif HAVE_GETIFADDRS
-    /* .. UNIX, with getifaddrs() ............................................. */
+  /* .. UNIX, with getifaddrs() ............................................. */
 
   if (getifaddrs (&addrs) < 0) {
     Py_DECREF (result);
@@ -1373,26 +1372,25 @@ allifaddrs (PyObject *self)
 
   for (addr = addrs; addr; addr = addr->ifa_next) {
     PyObject *ifinfo = getifaddrsinfo(addr);
-    if(!ifinfo)
-        continue;
+    if (!ifinfo)
+      continue;
 
     PyObject *ifname = PyUnicode_FromString (addr->ifa_name);
     PyObject* dict;
     if (PyDict_Contains(result, ifname)) {
-        dict = PyDict_GetItem(result, ifname);
+      dict = PyDict_GetItem(result, ifname);
     } else {
-	dict = PyDict_New ();
-        PyDict_SetItem(result, ifname, dict);
+      dict = PyDict_New ();
+      PyDict_SetItem(result, ifname, dict);
     }
 
     Py_XDECREF(ifname);
 
-    if(!add_to_family (dict, addr->ifa_addr->sa_family, ifinfo)) {
+    if (!add_to_family (dict, addr->ifa_addr->sa_family, ifinfo)) {
       Py_DECREF (dict);
       freeifaddrs (addrs);
       return NULL;
     }
-
   }
 
   freeifaddrs (addrs);
@@ -1458,14 +1456,13 @@ allifaddrs (PyObject *self)
   struct CNAME(ifreq) *pfreqend = (struct CNAME(ifreq) *)((char *)pfreq
                                                           + ifc.CNAME(ifc_len));
   while (pfreq < pfreqend) {
-      char* if_name = pfreq->CNAME(ifr_name);
-      PyObject *name = PyUnicode_FromString (if_name);
-      if (!PyDict_Contains(result, name))
-      {
-        PyObject* dict = socket_ioctls_info(if_name, sock);
-        PyDict_SetItem(result, name, dict);
-	Py_XDECREF(dict);
-      }
+    char* if_name = pfreq->CNAME(ifr_name);
+    PyObject *name = PyUnicode_FromString (if_name);
+    if (!PyDict_Contains(result, name)) {
+      PyObject* dict = socket_ioctls_info(if_name, sock);
+      PyDict_SetItem(result, name, dict);
+      Py_XDECREF(dict);
+    }
 
 #if !HAVE_SOCKADDR_SA_LEN
     ++pfreq;
@@ -1484,7 +1481,7 @@ allifaddrs (PyObject *self)
   free (ifc.CNAME(ifc_buf));
   close (fd);
 #endif /* HAVE_SOCKET_IOCTLS */
-    return result;
+  return result;
 }
 
 /* -- interfaces() ---------------------------------------------------------- */
