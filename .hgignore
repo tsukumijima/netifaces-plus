@@ -1,9 +1,0 @@
-syntax: glob
-build
-dist
-*.pyc
-*.pyd
-*.so
-*~
-*.egg-info
-*.pdb
