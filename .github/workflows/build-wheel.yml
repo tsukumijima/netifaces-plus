@@ -1,5 +1,9 @@
+# ref: https://github.com/msgpack/msgpack-python/blob/main/.github/workflows/wheel.yml
+
 name: Build Wheels
-on: [workflow_dispatch]
+on:
+  push:
+  workflow_dispatch:
 
 jobs:
   build_wheels:
