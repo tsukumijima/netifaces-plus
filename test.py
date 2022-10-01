@@ -41,7 +41,7 @@ for family in gateway_info:
             def_text = ''
         print('    %s (via %s%s)' % (gateway, interface, def_text))
     print('')
-    
+
 print('Default gateways:')
 default_gateways = gateway_info['default']
 for family in default_gateways:
