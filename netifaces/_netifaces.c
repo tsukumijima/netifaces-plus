@@ -1253,6 +1253,9 @@ ifaddrs (PyObject *self, PyObject *args)
   }
 
   for (addr = addrs; addr; addr = addr->ifa_next) {
+    if (!addr->ifa_addr)
+      continue;
+
     if (addr->ifa_name == NULL || strcmp (addr->ifa_name, ifname) != 0)
       continue;
 
@@ -1371,6 +1374,9 @@ allifaddrs (PyObject *self)
   }
 
   for (addr = addrs; addr; addr = addr->ifa_next) {
+    if (!addr->ifa_addr)
+      continue;
+
     PyObject *ifinfo = getifaddrsinfo(addr);
     if (!ifinfo)
       continue;
