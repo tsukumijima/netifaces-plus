@@ -9,7 +9,7 @@ jobs:
   build_wheels:
     strategy:
       matrix:
-        os: [windows-2022, macos-11, ubuntu-22.04]
+        os: [ubuntu-latest, windows-latest, macos-13, macos-latest]
     runs-on: ${{ matrix.os }}
     name: Build Wheels on ${{ matrix.os }}
 
@@ -24,7 +24,7 @@ jobs:
           platforms: arm64
 
       - name: Build
-        uses: pypa/cibuildwheel@v2.19.0
+        uses: pypa/cibuildwheel@main
         env:
           CIBW_ARCHS_LINUX: auto aarch64
           CIBW_ARCHS_MACOS: x86_64 universal2 arm64
