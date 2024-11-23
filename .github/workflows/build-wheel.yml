@@ -21,12 +21,12 @@ jobs:
         if: runner.os == 'Linux'
         uses: docker/setup-qemu-action@v3
         with:
-          platforms: arm64
+          platforms: all
 
       - name: Build
         uses: pypa/cibuildwheel@main
         env:
-          CIBW_ARCHS_LINUX: auto aarch64
+          CIBW_ARCHS_LINUX: auto armv7l aarch64
           CIBW_ARCHS_MACOS: x86_64 universal2 arm64
           CIBW_SKIP: pp*
 
@@ -37,11 +37,10 @@ jobs:
           path: wheelhouse
 
   publish_wheels:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     needs: build_wheels
     name: Publish Wheels
     steps:
-
       - name: Download Wheels from artifact
         uses: actions/download-artifact@v3
         with:
