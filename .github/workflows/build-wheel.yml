@@ -14,10 +14,37 @@ jobs:
   build_wheels:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest, windows-latest, macos-latest, macos-13]
+        include:
+          - os: ubuntu-latest
+            archs: [x86_64, aarch64, armv7l]
+          - os: windows-latest
+            archs: [AMD64, x86, ARM64]
+          - os: macos-latest
+            archs: [x86_64, arm64]
+          - os: macos-13
+            archs: [x86_64, arm64]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+          cache: 'pip'
+
+      - name: Setup cibuildwheel cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.cache/cibuildwheel
+            ~/Library/Caches/pip
+            ~/AppData/Local/pip/Cache
+          key: ${{ runner.os }}-cibuildwheel-${{ hashFiles('**/pyproject.toml', '**/setup.py') }}
+          restore-keys: |
+            ${{ runner.os }}-cibuildwheel-
 
       - name: Setup QEMU for Linux multi-arch
         if: runner.os == 'Linux'
@@ -28,14 +55,14 @@ jobs:
       - name: Build Wheels
         uses: pypa/cibuildwheel@main
         env:
-          # Optimize architecture coverage
-          CIBW_ARCHS_LINUX: x86_64 aarch64
-          CIBW_ARCHS_MACOS: x86_64 arm64
+          CIBW_ARCHS_LINUX: ${{ contains(matrix.os, 'ubuntu') && join(matrix.archs, ' ') || 'x86_64' }}
+          CIBW_ARCHS_WINDOWS: ${{ contains(matrix.os, 'windows') && join(matrix.archs, ' ') || 'AMD64' }}
+          CIBW_ARCHS_MACOS: ${{ (contains(matrix.os, 'macos-latest') || contains(matrix.os, 'macos-13')) && join(matrix.archs, ' ') || 'x86_64' }}
           CIBW_SKIP: pp* *-musllinux*
           
       - uses: actions/upload-artifact@v4
         with:
-          name: wheels-${{ matrix.os }}
+          name: wheels-${{ matrix.os }}-${{ join(matrix.archs, '-') }}
           path: ./wheelhouse
           retention-days: 5
 
