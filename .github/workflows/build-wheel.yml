@@ -55,7 +55,7 @@ jobs:
         env:
           CIBW_ARCHS_LINUX: ${{ contains(matrix.os, 'ubuntu') && join(matrix.archs, ' ') || 'x86_64' }}
           CIBW_ARCHS_WINDOWS: ${{ contains(matrix.os, 'windows') && join(matrix.archs, ' ') || 'AMD64' }}
-          CIBW_ARCHS_MACOS: ${{ (contains(matrix.os, 'macos') && join(matrix.archs, ' ') || 'x86_64' }}
+          CIBW_ARCHS_MACOS: ${{ (contains(matrix.os, 'macos') && join(matrix.archs, ' ')) || 'x86_64' }}
           CIBW_TEST_SKIP: "*-win_arm64"
           CIBW_SKIP: pp* *-musllinux*
           
