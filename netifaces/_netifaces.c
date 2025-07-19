@@ -2003,7 +2003,7 @@ gateways (PyObject *self)
         sizeof(sanl_from),
         &iov,
         1,
-        NULL,
+        0,
         0,
         0
       };
