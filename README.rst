@@ -1,4 +1,4 @@
-netifaces-plus 0.12.4
+netifaces-plus 0.12.5
 =====================
 
 | This library is a fork of `al45tair/netifaces <https://github.com/al45tair/netifaces>`_.
